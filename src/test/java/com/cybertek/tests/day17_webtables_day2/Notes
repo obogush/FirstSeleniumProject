@@ -1,0 +1,27 @@
+Today is 7/24/2019
+
+Agenda: Web Tables.
+
+ <table>
+ 	<thead>
+ 		<th>
+
+ 		</th>
+ 	</thead>
+ 	<tbody>
+ 		<tr>
+ 			<td></td>
+ 		</tr>
+ 	</tbody>
+ </table>
+
+If we want to make sure that element doesn't exists, based on locator - use findElements(). Empty list means no such element found.But, at the same time - you will not get an exception.
+
+
+"a".compareTo("x");
+
+//table[1]//tbody//tr//td[2]
+
+Means select data from second column.
+If we don't specify index of tr, that means
+we are selecting elements from all rows.

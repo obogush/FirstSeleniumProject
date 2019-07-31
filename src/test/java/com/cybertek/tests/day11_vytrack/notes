@@ -1,0 +1,56 @@
+Today is review and VYTRACK automation practice
+
+This is what I used the most.
+EXAMPLE: List<Map<String, String>> - for data tables. (from DB, from Excel file or from cucumber data tables.)
+
+
+Scenario: Verify for store manager
+Login as story manager
+Go to Activities --> Calls
+Verify that Log Call button is displayed
+Go to Activities --> Calendar Events
+Verify that Create Calendar Event button is displayed
+
+Poem: My code.
+
+Ice cream for kids
+Flowers for ladies
+Code for geeks...
+
+ Thread.sleep(seconds * 1000 ); means put on hold thread.
+
+ What is thread? It's a path of code execution.
+
+ Java supports multi-threading. That means multiple tasks can be executed at the same time.
+#######################
+
+"Test case: Save and Cancel options
+Login as sales manager
+Go to Activities --> Calendar Events
+Click on Create Calendar Event
+Verify Cancel button is displayed
+Verify Save And Close button is displayed
+Verify Save And Close dropdown option is displayed
+Verify Save And New dropdown option is displayed
+Verify Save dropdown option is displayed
+
+One thing that I want to emphasize that it's not final structure of automation framework. We don't design our framework based on class. Any duplication has been done due to practice purpose.
+
+
+
+"Test Case: Default options
+Login as sales manager
+Go to Activities --> Calendar Events
+Click on Create Calendar Event
+Default owner name should be current user
+Default title should be blank
+Default start date should be current date
+Default start time should be current time
+
+Date/time format:
+
+http://tutorials.jenkov.com/java-internationalization/simpledateformat.html
+
+
+
+

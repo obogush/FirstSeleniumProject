@@ -1,0 +1,222 @@
+Agenda:
+	System properties
+	Singleton design pattern
+	Driver class
+	TestBase class
+#############
+
+System.setProperty("webdriver.chrome.driver", "/chromedriver");
+
+Basically, because browser doesn't have a inbuilt server. (safari has it for sure)
+
+setProperty takes key-value pair
+
+webdriver.chrome.driver - environment variable
+
+System.getProperty("os.name"); - returns current OS name
+
+Mac OS X
+
+I was using System.getProperty("os.name") to configure appropriate webdriver. Because my laptop is on Windows 7, and server is Linux. So same driver will not work on both systems.
+
+
+//this is an entry set of all properties
+//since it's key -value pair, we use Map to store this information
+
+        for(Map.Entry<Object, Object> property: properties.entrySet()){
+            //get key of every item (os.name)     value of every property (Mac OS X)
+            System.out.println("Key: "+property.getKey()+", Value: "+property.getValue());
+        }
+
+#########################
+Application use properties to maintain configuration.
+
+We gonna use .properties file to configure automation framework.
+
+configuration.properties ---> it looks simple text file with key-value pair.
+
+For example:
+browser=chrome
+
+
+In that file (configuration.properties) we will have information regarding:
+	browser (chrome, ie, firefox)
+	environment (dev, qa, preprod, prod)
+	urls
+	db urls (jdbc:postgres:lolahost:5432/hr)
+
+	credentials (udername=admin/password=admin)
+	selenium grid: config: vm info/path to config files
+
+
+In case of java files, we have to recompile them after any change. We don't need to change anything in code. .proprties is a simple text file.
+
+
+java.io.FileNotFoundException: /configuration.properties (No such file or directory)
+
+It means that file not found, fix path to the file.
+
+
+1. Your configuration.properties file must be on the same level as your pom.xml file.
+Then, as a path to the file, you can just provide configuration.properties.
+
+/Users/cybertekstudio/IdeaProjects/TestAutomationSpring2019/configuration.properties
+
+
+If you will request unexisting property, you will get NULL.
+
+Or provide key name that doesn't exist.
+
+ This our very first config
+
+browser=chrome
+username=storemanager85
+password=UserUser123
+url=http://qa2.vytrack.com/user/login
+excplicitwait=20
+implicitwait=10
+
+# - to comment out
+
+
+package com.cybertek.utilities;
+
+import javax.imageio.IIOException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Properties;
+
+public class ConfigurationReader {
+    private static Properties configFile;
+
+    static {
+        try {
+            //path to our .properties file
+            //MIGHT BE WRONG PATH HERE, PAY ATTENTION
+            String path = "configuration.properties";
+            //we create object of input stream to access file
+            System.out.println(path);
+            //provides access to file
+            FileInputStream input = new FileInputStream(path);
+            //initialize configFile
+            configFile = new Properties();
+            //load properties file
+            configFile.load(input);
+            //close input stream
+            input.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static String getProperty(String key){
+        return configFile.getProperty(key);
+    }
+}
+
+path - path to configuration.properties file
+FileInputStream - reads file
+load(input) - to load properties file (to read key-value elements from the file)
+getProperty(key) -to get specific property by key name.
+
+
+Design patterns are proved solutions for specific task.
+
+So it's like a strategy (or template) about how to develop application.
+
+Singleton:
+
+public class Singleton{
+	private static Singleton object; //only one object allowed
+
+	private Singleton(){ // to prevent object creation
+
+	}
+
+	public static Singleton getInstance(){ //method that will return instance of this class
+		if(object == null){ //if object wasn't created, initialize it
+			object = new Singleton();
+		}
+		//otherwise, just return that object
+		return object;
+	}
+
+}
+
+Based on this concept, we will create Driver class. (same object across all classes of our project)
+
+Why? because we want to make sure that only one driver object exists. We want to use same driver for all tests. We will create Driver class under utils. This class will have getDriver() method that will return driver object.
+
+
+package com.cybertek.utilities;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Driver {
+    private static WebDriver driver;
+
+    public static WebDriver getDriver(){
+        if(driver==null){
+            if(ConfigurationReader.getProperty("browser").equals("chrome")){
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+            }else if (ConfigurationReader.getProperty("browser").equals("firefox")){
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+            }else{
+                throw new RuntimeException("Wrong browser name!");
+            }
+        }
+        return driver;
+    }
+}
+
+How driver class works?
+1. It checks if driver has been initialized.
+2. If driver is null, based on browser value from properties file, it will be initialized.
+3. it will return WebDriver object.
+
+With this approach, it's very easy to configure driver.
+
+Why constructor is private? To make sure that we have only one driver object across project. All tests will use same driver.
+
+
+ public static void closeDriver(){
+        if(driver!=null){
+            driver.quit();
+            driver = null;
+        }
+    }
+
+
+    quit() method will close tabs that webdriver opened, but, it will not make webdriver instance null. That's why we use this method.
+
+
+#####################################
+
+System properties - some properties of system (java version, os, owner info)
+We user System.getProperty("key") - to read system properties
+Then we created .properties file - we use this file for project config
+This file usually contains browser info, wait info, credentials, connection info etc.
+This is central point of configuration of our automation framework.
+Singleton design pattern - it allows us to make sure that we have only one instance of WebDriver across entire project.
+How to achieve it?
+
+private static instance of WebDriver, private constructor, getDriver method.
+TestBase class - base class for every test class in project. It runs setup and tear down. We are extending this class by every test class. From now one, try to keep tests classes and page classes separate.
+
+
+
+
+
+
+
+
+
+
+
+
+

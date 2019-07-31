@@ -1,0 +1,38 @@
+
+Office hours:
+Date: 07/29/19
+-
+Office hour with Khalili
+What automation tools have you been working with?
+- Selenium?
+    It is an Automation tool that works with web based application, Selenium also can work with mobile Application.
+ There are 4 types of Selenium:
+ Selenium RC: It was used for automating the Firefox browser
+ Selenium IDE: this was an old version, right now we use from Selenium webDriver instead of selenium IDE.
+ Selenium Grid: It is used mostly for multi browser testing.
+ What are the Pros and Cons of Selenium WebDriver?
+ Selenium Pros:
+ - It is open source
+ - It is working with multi programming languages, like Java, Python, Ruby, C#
+ - It is supporting multi operating system.
+ - It works with multi browsers like Chrome, Firefox, Edge, Safari and etc ...
+ - It is supporting mobile testing, Apium,
+Cons:
+- Selenium needs a core programming skill to be able to use Selenium.
+- Harder to implement
+- Not supporting visual testing
+- It does not work with window based application, but if you use from 3rd party plugin like robot then you will be able to do it.
+What is the Driver?
+- It is middle program which translates the Selenium code to the browser.
+- How many ways you can locate the html elements?
+    - ID
+    - Name
+    - Class
+    - Tag
+    - Link Text
+    - Partial link text
+    - CSS selector
+    - xpath
+How many types of xpath exist and what are the differences?
+- Absolute Xpath: starts / and it is parent/child html relationship
+- Relative Xpath: it starts with // and it does not rely on the html structure, you can use it indepdently to write xpath about any html element

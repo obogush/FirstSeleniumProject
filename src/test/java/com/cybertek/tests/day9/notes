@@ -1,0 +1,192 @@
+7/7/2019
+
+ Today we will talk about TESTNG
+
+
+What is unit testing?
+
+Testing of smallest functional part of application.
+In other words - testing of methods.
+
+Test data: array1{1,2,453, 3};
+
+assertEquals(findMax(array1), 453); // if it's true,
+
+unit test passed.
+
+public int findMax(int[] array){
+	int max = array[0]
+	for(int i: array){
+		if(i> max)
+		 max = i
+	}
+	return max;
+}
+
+My story
+
+###I've never done unit testing at work,
+it was developers responsibility. My developers always called
+unit tests junits.
+
+Unit tests written manually by developers. Unit test is an
+essential testing stage that helps to find bugs and fix them
+immediately.
+
+For unit testing, there are some popular testing frameworks
+(or tools) such as: TestNG (java), JUnit (java), NUnit (.net).
+
+TestNG - let's you write unit tests and do assertions. Also it
+helps us to generate reports.
+
+###I would say that report is the most important thing
+for management. Why? Because they don't check your code,
+they can understand what tests passed or failed only based
+on report. Report is like visual representation of test results.
+TestNG helps us to group tests, create test suites. Perform data
+driven testing (DDT).
+
+Example:
+assertEquals(2, 2),
+assertFalse( "apple" == "orange"),
+assertTrue("apple".equals("apple"))
+
+As selenium testers, we use testng for writing, organizing,
+asserting and running selenium scripts.
+
+@Test
+public void test1(){
+	driver.get("google.com");
+	driver.find().click()
+}
+
+@Test - it calls annotation. This annotation will turn method into
+test. So we don't need main method to run our code. We can put this
+annotation and run method as a test.
+
+
+How to add testng? You need to add library. Since we use maven, we can add dependency:
+
+ <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.3</version>
+            <scope>test</scope>
+        </dependency>
+
+TestNG assertions it's a mechanism for asserting/verifying.
+
+
+Assert class provides assertions.
+
+For example we use assertEquals to verify if expected value is equals to the actual. If no - exception will occur, and in the console output you will see:
+
+java.lang.AssertionError: expected [orange] but found [apple]
+Expected :orange
+Actual   :apple
+
+Once assertion fails - your test execution will stop.
+
+Assert.assertTrue() - checks if something is true.
+
+java.lang.AssertionError: expected [true] but found [false]
+Expected :true
+Actual   :false
+
+
+assertFalse() - checks if something is false. If no - then it fail and stop your execution.
+
+@Test - to create test method.
+
+
+using this annotation we don't need a main method to run class/ method.
+
+@BeforeMethod -> it will run method before every test method, regardless if other tests failed or passed. We can do following things:
+	 prepare test data
+	 open browser
+	 create connections
+	 open some URL
+	 Login
+
+
+@AfterMethod -> method with this annotation will always run after every test method regardless if test failed or passed.
+What kind of things we can do:
+	close/quit browser
+	log out
+	close connections (related to JDBC)
+	generate report
+
+For these method we always use public void methods. No static.
+
+With @Test (priority = 0)
+
+We can change priority execution.
+
+By default, TestNG runs tests in alphabetic order.
+
+But, we can change order. Just put  (priority = 0) next to the @Test
+
+Lower number - higher priority.
+
+By default, priority is set to 0. If @Test doesn't have a priority - then TestNG will set priority based on alphabetic order.
+
+@BeforeClass - method with this annotation will be running only once in the class, regardless of amount of tests. What we can put in this method?
+	 prepare test data
+	 create connections
+	 initialize driver
+	 set webdriver properties
+
+BeforeClass -> BeforeMethod -> method -> AfterMethod -> AfterClass
+
+Before class
+Before method
+I am a test1!
+After method
+After class
+
+
+####2 Tests in the class
+
+Before class - runs only once in a class before
+
+Before method - runs before every test method
+I am a test1! - test itself
+After method - runs after every test method
+
+Before method - runs before every test method
+I am a test2! - test itself
+After method - runs after every test method
+
+After class - runs only once in a class after
+
+
+@channel TASK:
+Test Case default date
+open website http://practice.cybertekschool.com/dropdown
+verify default year is current 2019
+verify default month is current July
+verify default day is current 7
+
+@BeforeClass - > runs once before everything in a class.
+
+@AfterClass - > runs once after everything in a class.
+Runs only once, regardless of number of tests in the class.
+
+####Interview question:
+
+What's the difference between assert and verify?
+
+assertion --> if it fails, it fails test also. Execution doesn't continue after failure.
+verification --> if it fails, show must go on...Execution continue.
+
+TestNG provide Assert class. Assert class has methods for assertions.
+
+assertEquals(param1, param2)
+assertTrue(boolean)
+assertFalse(boolean)
+
+Also, testng provides soft assertions as well as hard assertions(regular). In case of soft assertions, your test will not interrupt in case of failure.
+
+
+
+

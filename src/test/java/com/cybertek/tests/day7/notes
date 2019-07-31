@@ -1,0 +1,147 @@
+Agenda:
+	-we will talk a little more about xpath
+	it's not the last session on xpath, we will have class dedicated to locators.
+	- drop downs, how to handle them. Drop downs with select and without.
+	- list of elements or List<WbElement> and findElements (continue)
+
+###### XPATH (XML Path)
+
+One of the locators strategies in selenium. How to use it?
+
+By.xpath(locator)
+
+For FireFox, there was a extension called FireBug, FirePath that could generate xpath for any element. No these extension deprecated.
+
+In google chrome or firefox, you can get auto generated xpath by default.
+
+I personally don't trust any auto-generated locators. I prefer to build it by myself. I would say the las option for locator, is xpath based on text of element, that always worked for me.
+
+
+Based on my experience, auto-generated lcoators not very reliable. You can use them, if you really don't know how to create one.
+
+XPATH is very useful when:
+	you cannot find element other than only by text.
+	you have to find dynamic element (some attribute values are dynamic, position of element is dynamic)
+
+
+There are 2 types of xpath:
+
+Relative and Absolute.
+
+I would say that we are trying to use only relative xpath.
+
+Absolute:
+1. It always starts from '/'
+2. It must start from root element <html> tag. You cannot start from the middle of the page. You must go from parent to child, you have to go through entire tree of elements.
+
+
+/html/body/div/div[2]/div/div[1]/button[3]
+
+Story:
+
+At work, we had requirement to change all possible locators from xpath to css. Our test lead inferred that it will reduce execution time. Actually - not.
+
+Id should be faster then xpath, this is what people say. But, in my application, I didn't notice any difference while testing on google chrome. On IE - xpath was a little slower(very subjective). Again, it's my personal experience. IN google, you can find different opinion. In terms of performance. css and id is the same. Selenium, uses css selector internally for id.
+
+
+Relative XPATH:
+
+1. Always starts with //
+2. It can start from anywhere.
+
+basic syntax:
+
+//tag[@attribute='value']
+//*[@attribute='value']
+//tag[text()='some text']
+//*[contains(@attribute,'value')]
+//*[contains(text(),'some text']
+
+* - means any tag.
+
+//button[text()='Button 4']
+//button[@onclick='button4()']
+//*[contains(text(),'Button 4')]
+//button[contains(@onclick,'4')]
+
+
+//select[@aria-label='Select a category for search']
+
+.= is the same as text()=
+
+//button[5] - to get the fifth one
+
+//button[last()] - last element.
+
+inside [ ] you can specify index of element.
+
+//button[@class='btn btn-primary'][@onclick='button2()']
+
+- to specify 2 attributes
+
+//button[@class='btn btn-primary' and @onclick='button2()']
+
+starts with some value:
+
+//button[starts-with(@id,'button_')]
+
+To be continue.....
+
+In HTML, usually dropdowns have tag <select>
+
+<select id="dropdown">
+     <option value="" disabled="disabled" selected="selected">Please select an option</option>
+     <option value="1">Option 1</option>
+     <option value="2">Option 2</option>
+ </select>
+
+ In Selenium, there is a special class that can handle these kind of drop downs. We use Select class.
+
+ import org.openqa.selenium.support.ui.Select;
+
+ .getFirstSelectedOption() - will return web element that represents already selected option in the dropdown. We can read text, value or other attributes of this selection.
+ Usually, we read only text to verify that selected text is equals to expected one.
+
+
+import org.openqa.selenium.support.ui.Select;
+
+Use only this import. Importing something different means dealing with totally different library. This library is coming from selenium package.
+
+Select in Selenium with Select class from Selenium
+
+hahaha....
+
+How to deal with <select> drop down?
+
+Step 1. Find this dropdown by some locator and create webelement.
+Step 2. Create an object of Select class.
+Step 3. Provide webelement from Step 1 into constructor of Select object.
+
+
+value of attribute value
+
+ha ha.. again, very funny selenium joke (no)
+
+<option value="PA">Pennsylvania</option>
+
+we can select this option based on value PA or based on visible text Pennsylvania
+
+
+Homework:
+
+Practice:
+	Task #1
+       deselectAll();
+       deselectByIndex();
+       deselectByValue();
+       deselectByVisibleText();
+       isMultiple();
+
+   Task #2
+    Also, write a method that will check that values in dropdown are stored in the alphabetic order
+
+   Task #3
+   	Try to automate non-select dropdown. (Select a website)
+
+
+
